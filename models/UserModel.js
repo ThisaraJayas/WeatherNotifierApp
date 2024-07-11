@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { weatherSchema } from "./WeatherModel";
+import { weatherSchema } from "./WeatherModel.js";
 
-const userSchema = new new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     email:{
         type:String,
         required:true,

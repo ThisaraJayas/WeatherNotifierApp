@@ -1,4 +1,5 @@
-import User from '../models/UserModel'
+import User from '../models/UserModel.js'
+
 export const saveUser = async(req,res)=>{
     const { email, location } = req.body;
     try{

@@ -4,6 +4,8 @@ import dotenv from 'dotenv'
 dotenv.config()
 import userRouter from './routes/UserRoute.js'
 import axios from 'axios'
+import cron from 'node-cron'
+import { sendWeatherReport } from './controllers/UserController.js'
 
 const app= express()
 app.use(express.json())
@@ -21,3 +23,6 @@ app.listen(3000,()=>{
 })
 
 app.use('/user',userRouter)
+
+cron.schedule('*/1 * * * *', sendWeatherReport);
+console.log("Weather reports will be sent every 2 minutes.");

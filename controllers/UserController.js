@@ -1,7 +1,6 @@
 import User from '../models/UserModel.js'
 import { getWeatherData } from '../utils/WeatherUtils.js';
 import nodemailer from 'nodemailer'
-
 import { generateWeatherDescription } from '../utils/generateWeatherDescription .js';
 
 export const saveUser = async(req,res)=>{
@@ -37,17 +36,7 @@ export const saveUser = async(req,res)=>{
         res.status(400).json({message:"User Not Created",error})
     }
 }
-// export const getUserWeather = async(req,res)=>{
-//     const {email} = req.params
-//     try{
-//         const user = await User.findOne({email})
-//         const [city, countryCode] = user.location.split(',').map(part => part.trim());
-//         const {data} = await getWeatherData(city,countryCode)
-//         res.status(200).json({message:"User Details",user,weatherData: data})
-//     }catch(error){
 
-//     }
-// }
 export const getUserWeather = async(req,res)=>{
     const {email} = req.params
     try{
@@ -77,10 +66,8 @@ export const getWeatherByDate =async(req,res)=>{
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-
-        // Convert the date parameter to a Date object
         const targetDate = new Date(date);
-        targetDate.setHours(0, 0, 0, 0); // Set to start of the day
+        targetDate.setHours(0, 0, 0, 0); 
 
         // Find weather info for the specified date
         const weatherInfo = user.weatherInfo.find(info => {

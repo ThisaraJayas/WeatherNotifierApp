@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export async function getLocationCoordinates (cityName,countryCode){
+export const getLocationCoordinates = async(cityName,countryCode)=>{
     const stateCode = ''
     const limit = 5
     try{

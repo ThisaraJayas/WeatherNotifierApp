@@ -16,8 +16,9 @@ export const getUserWeather = async(req,res)=>{
     const {email} = req.params
     try{
         const user = await User.findOne({email})
-        const {data} = await getWeatherData('Colombo','LK')
-        res.status(200).json({message:"User Details",weatherData: data})
+        const [city, countryCode] = user.location.split(',').map(part => part.trim());
+        const {data} = await getWeatherData(city,countryCode)
+        res.status(200).json({message:"User Details",user,weatherData: data})
     }catch(error){
 
     }

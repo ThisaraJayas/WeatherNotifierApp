@@ -9,8 +9,8 @@ export const saveUser = async(req,res)=>{
         const [city, countryCode] = location.split(',').map(part => part.trim());
         const {data} = await getWeatherData(city,countryCode)
 
-        const tempCelsius = data.main.temp - 273.15
-        const feelsLikeCelsius = data.main.feels_like - 273.15
+        const tempCelsius = (data.main.temp - 273.15).toFixed(0)
+        const feelsLikeCelsius = (data.main.feels_like - 273.15).toFixed(0)
 
         user.weatherInfo.push({
             date: new Date(),

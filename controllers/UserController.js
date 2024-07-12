@@ -9,6 +9,9 @@ export const saveUser = async(req,res)=>{
         const [city, countryCode] = location.split(',').map(part => part.trim());
         const {data} = await getWeatherData(city,countryCode)
 
+        const tempCelsius = data.main.temp - 273.15
+        const feelsLikeCelsius = data.main.feels_like - 273.15
+
         user.weatherInfo.push({
             date: new Date(),
             weather:{
@@ -16,8 +19,8 @@ export const saveUser = async(req,res)=>{
                 description: data.weather[0].description
             },
             temperature: {
-                current: data.main.temp,
-                feelsLike: data.main.feels_like
+                current: tempCelsius,
+                feelsLike: feelsLikeCelsius
             },
             humidity: data.main.humidity,
             pressure: data.main.pressure,
@@ -31,14 +34,22 @@ export const saveUser = async(req,res)=>{
         res.status(400).json({message:"User Not Created",error})
     }
 }
+// export const getUserWeather = async(req,res)=>{
+//     const {email} = req.params
+//     try{
+//         const user = await User.findOne({email})
+//         const [city, countryCode] = user.location.split(',').map(part => part.trim());
+//         const {data} = await getWeatherData(city,countryCode)
+//         res.status(200).json({message:"User Details",user,weatherData: data})
+//     }catch(error){
 
+//     }
+// }
 export const getUserWeather = async(req,res)=>{
     const {email} = req.params
     try{
         const user = await User.findOne({email})
-        const [city, countryCode] = user.location.split(',').map(part => part.trim());
-        const {data} = await getWeatherData(city,countryCode)
-        res.status(200).json({message:"User Details",user,weatherData: data})
+        res.status(200).json({message:"User Details",user})
     }catch(error){
 
     }

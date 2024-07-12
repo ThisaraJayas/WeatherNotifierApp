@@ -6,7 +6,31 @@ export const weatherSchema = new mongoose.Schema({
         required:true
     },
     weather:{
-        type:String,
-        required:true
-    }
+        main:{
+            type:String
+        },
+        description:{
+            type:String
+        }
+    },
+    temperature:{
+        current: {
+            type: Number
+        },
+        feelsLike:{
+            type:Number
+        }
+    },
+    humidity: {
+        type: Number,
+    },
+    pressure: {
+        type: Number,
+    },
+    windSpeed: {
+        type: Number,
+    },
+    clouds: {
+        type: Number
+    },
 })

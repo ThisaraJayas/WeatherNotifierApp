@@ -5,8 +5,28 @@ export const saveUser = async(req,res)=>{
     const { email, location } = req.body;
     try{
         const user = new User({email,location})
+
+        const [city, countryCode] = location.split(',').map(part => part.trim());
+        const {data} = await getWeatherData(city,countryCode)
+
+        user.weatherInfo.push({
+            date: new Date(),
+            weather:{
+                main: data.weather[0].main,
+                description: data.weather[0].description
+            },
+            temperature: {
+                current: data.main.temp,
+                feelsLike: data.main.feels_like
+            },
+            humidity: data.main.humidity,
+            pressure: data.main.pressure,
+            windSpeed: data.wind.speed,
+            clouds:data.clouds.all,
+
+        })
         await user.save()
-        res.status(200).json({message:"User Created Success",user: user.location})
+        res.status(200).json({message:"User Created Success",user: user})
     }catch(error){
         res.status(400).json({message:"User Not Created",error})
     }
@@ -21,5 +41,16 @@ export const getUserWeather = async(req,res)=>{
         res.status(200).json({message:"User Details",user,weatherData: data})
     }catch(error){
 
+    }
+}
+export const updateUserLocation = async(req,res)=>{
+    const {email} = req.params
+    const {location}=req.body
+
+    try{
+        const user = await User.findOneAndUpdate({email},{location:location},{new:true})
+        res.status(200).json({ message: "User Location Updated Successfully", user })
+    }catch(error){
+        res.status(400).json({ message: "Error Updating User Location", error });
     }
 }

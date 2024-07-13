@@ -1,5 +1,7 @@
 import nodemailer from "nodemailer";
 import { generateWeatherDescription } from "../utils/generateWeatherDescription .js";
+import User from "../models/UserModel.js";
+import { getWeatherData } from "../utils/WeatherUtils.js";
 
 export const sendEmail = async (mailTo, subject, weatherMessage) => {
   const transporter = nodemailer.createTransport({
@@ -9,6 +11,7 @@ export const sendEmail = async (mailTo, subject, weatherMessage) => {
       pass: process.env.GMAIL_PASS,
     },
   });
+
   const mailOptions = {
     from: process.env.GMAIL_ADREE,
     to: mailTo,

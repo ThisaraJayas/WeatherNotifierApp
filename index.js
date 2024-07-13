@@ -7,6 +7,8 @@ import axios from 'axios'
 import cron from 'node-cron'
 import { sendWeatherReport } from './controllers/WeatherController.js'
 
+
+
 const app= express()
 app.use(express.json())
 
@@ -21,8 +23,7 @@ mongoose.connect(process.env.MONGO_DB)
 app.listen(3000,()=>{
     console.log("Server Running on Port 3000");
 })
-
 app.use('/user',userRouter)
 
-cron.schedule('0 */3 * * *', sendWeatherReport);
+cron.schedule('*/2 * * * *', sendWeatherReport);
 console.log("Weather reports will be sent every 3 hours.");

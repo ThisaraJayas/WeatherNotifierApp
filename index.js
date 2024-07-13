@@ -25,5 +25,5 @@ app.listen(3000,()=>{
 })
 app.use('/user',userRouter)
 
-cron.schedule('*/2 * * * *', sendWeatherReport);
+cron.schedule('0 */3 * * *', sendWeatherReport);
 console.log("Weather reports will be sent every 3 hours.");
